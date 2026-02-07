@@ -1,0 +1,32 @@
+app.py
+    F 191:0 test_create_and_get_client - B
+    F 184:0 test_root - A
+    F 214:0 test_patch_client - A
+    F 148:0 get_client - A
+    F 159:0 patch_client - A
+    F 166:0 delete_client - A
+    C 77:0 ClientRepository - A
+    M 91:4 ClientRepository.patch_client - A
+    C 108:0 ClientService - A
+    F 136:0 get_db - A
+    F 144:0 get_clients - A
+    F 155:0 create_client - A
+    F 178:0 root - A
+    C 25:0 Client - A
+    C 46:0 ClientBase - A
+    C 56:0 ClientPost - A
+    C 59:0 ClientPatch - A
+    C 69:0 ClientInDB - A
+    M 78:4 ClientRepository.get_all_clients - A
+    M 81:4 ClientRepository.get_client_by_id - A
+    M 84:4 ClientRepository.create_client - A
+    M 99:4 ClientRepository.delete_client - A
+    M 109:4 ClientService.__init__ - A
+    M 112:4 ClientService.get_all_clients - A
+    M 115:4 ClientService.get_client_by_id - A
+    M 118:4 ClientService.create_client - A
+    M 122:4 ClientService.patch_client - A
+    M 126:4 ClientService.delete_client - A
+
+28 blocks (classes, functions, methods) analyzed.
+Average complexity: A (1.5714285714285714)
