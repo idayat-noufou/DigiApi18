@@ -1,0 +1,83 @@
+name: QualityPipeline
+
+on: [push]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Run linters
+      run: flake8 app.py || true
+
+    - name: Run unit tests
+      run: pytest test_app.py > pytest_results.txt
+
+    - name: Run radon (technical debt)
+      run: radon cc app.py -a > radon_results.txt
+
+    - name: Upload quality artifacts
+      if: ${{ env.ACT != 'true' }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: quality-reports
+        path: |
+          pytest_results.txt
+          radon_results.txt
+
+
+  performance-test:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install k6
+      if: ${{ env.ACT != 'true' }}
+      run: |
+        sudo apt update
+        sudo apt install -y gnupg ca-certificates
+        sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg \
+          --keyserver hkp://keyserver.ubuntu.com:80 \
+          --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
+        echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" \
+          | sudo tee /etc/apt/sources.list.d/k6.list
+        sudo apt update
+        sudo apt install -y k6
+
+    - name: Run k6 performance tests
+      if: ${{ env.ACT != 'true' }}
+      run: k6 run k6.test.js > k6_results.txt
+
+    - name: Upload performance artifacts
+      if: ${{ env.ACT != 'true' }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: performance-reports
+        path: k6_results.txt
+
+
+  ai-analysis:
+    runs-on: ubuntu-latest
+    needs: [build, performance-test]
+
+    steps:
+    - name: AI analysis placeholder
+      run: |
+        echo "Analyse IA automatique des métriques de qualité et de performance."
+        echo "Seuils critiques :"
+        echo "- Latence moyenne > 1s : FAIL"
+        echo "- Taux d’erreur > 1% : FAIL"
+        echo "- Complexité radon > C : WARNING"

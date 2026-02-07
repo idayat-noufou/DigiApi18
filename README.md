@@ -206,3 +206,20 @@ Les niveaux de charge considérés sont :
 | POST /api/v1/client | Faible | Faible | Faible | 0 % | Stable |
 | POST /api/v1/client | Moyenne | Modérée | Modérée | < 1 % | Stable |
 | POST /api/v1/client | Élevée | Élevée | Très élevée (timeouts) | ~1,4 % | Dégradé |
+
+
+## TP 3.3 — Pipeline CI/CD avec intégration des tests
+
+### 3.3.1. Pipeline
+
+Le pipeline CI/CD enrichi est défini dans le dossier `.github/workflows`.
+
+Le pipeline a été testé en local à l’aide de l’outil **nektos/act**  
+(https://github.com/nektos/act) afin d’éviter de multiplier les commits et les push
+sur le dépôt distant.
+
+Certaines étapes du pipeline sont conditionnées par
+`if: ${{ env.ACT != 'true' }}` afin de désactiver localement les actions non
+compatibles avec l’exécution via `act` (upload d’artefacts, installation de k6).
+
+### 
