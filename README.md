@@ -222,4 +222,34 @@ Certaines étapes du pipeline sont conditionnées par
 `if: ${{ env.ACT != 'true' }}` afin de désactiver localement les actions non
 compatibles avec l’exécution via `act` (upload d’artefacts, installation de k6).
 
-### 
+### 3.3.2. Prompt IA
+
+>Voici un pipeline CI/CD GitHub Actions intégrant :
+>- l’analyse de la dette technique avec flake8 et radon
+>- l’exécution de tests unitaires avec pytest
+>- des tests de performance avec k6
+>- la collecte des rapports sous forme d’artefacts
+>
+>Les résultats disponibles sont :
+>- rapports de tests unitaires (pytest)
+>- analyse de complexité et dette technique (radon)
+>- résultats des tests de charge k6
+>
+>Analyse ces éléments et indique :
+>- les endpoints ou parties de l’application les plus critiques
+>- les seuils de qualité et de performance qui devraient être ajustés
+>- les risques principaux liés à la dette technique actuelle
+>- des recommandations simples pour améliorer le pipeline CI/CD
+>- des actions prioritaires pour réduire la dette technique sans refonte complète
+>
+>L’analyse doit rester pragmatique et adaptée à un projet simple.
+
+
+### 3.3.3. Tableau KPI global du pipeline
+     
+
+| Endpoint | Latence moyenne (ms) | Temps max (ms) | Taux d’erreur (%) | Notes IA / Recommandations |
+|---------|----------------------|---------------|-------------------|----------------------------|
+| GET / | ~300 | ~800 | 0 % | Endpoint stable, aucun problème critique détecté |
+| GET /api/v1/client | ~1000 | ~60000 | ~1.4 % | Endpoint critique sous forte charge, risque de timeout, accès DB à optimiser |
+| POST /api/v1/client | ~1100 | ~60000 | ~1.4 % | Endpoint critique, sensible à la concurrence, limiter la charge et optimiser les écritures |
